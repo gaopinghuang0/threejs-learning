@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Programming 3D application</title>
+    <link rel="stylesheet" href="../libs/jquery-ui-1.10.3.custom/css/ui-lightness/jquery-ui-1.10.3.custom.css" />
+    <link rel="stylesheet" href="../css/main.css" />
+    <script src="../libs/three.js"></script>
+    <script src="../libs/Stats.js"></script>
+
+    <style>
+        #main-canvas {
+            background-color: #aaa;
+        }
+
+        #title {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+        }
+        #prompt {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+        }
+    </style>
+
+    <script>
+        var requestAnimationFrame = window.requestAnimationFrame
+            || window.mozRequestAnimationFrame
+            || window.webkitRequestAnimationFrame
+            || window.msRequestAnimationFrame;
+        window.requestAnimationFrame = requestAnimationFrame;
+
+        var scene,
+            camera,
+            renderer,
+            cube,
+            sphereGroup,
+            sphere,
+            cone,
+            currentTime = Date.now(),
+            duration = 5000;  // ms
+
+        function init() {
+            stat = new Stats();
+            stat.domElement.style.position = 'absolute';
+            stat.domElement.style.right = '0px';
+            stat.domElement.style.top = '0px';
+            document.body.appendChild(stat.domElement);
+
+            var canvas = document.getElementById('main-canvas');
+
+            createScene(canvas);
+
+            addMouseHandler(canvas);
+
+            draw();
+
+        }
+
+        function createScene(canvas) {
+
+            renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                antialias: true
+            });
+
+            scene = new THREE.Scene();
+
+            // Add  a camera so we can view the scene
+            camera = new THREE.PerspectiveCamera( 45, canvas.width / canvas.height, 1, 4000 );
+            camera.position.z = 10;
+            scene.add(camera);
+
+            cubeGroup = new THREE.Object3D;
+
+            // plane
+            var texture = THREE.ImageUtils.loadTexture('../images/ash_uvgrid01.jpg');
+            var material = new THREE.MeshLambertMaterial({map: texture});
+
+            var geometry = new THREE.CubeGeometry(2, 2, 2);
+
+            cube = new THREE.Mesh(geometry, material);
+            cube.rotation.x = Math.PI / 5;
+            cube.rotation.y = Math.PI / 5;
+
+            cubeGroup.add(cube);
+
+            sphereGroup = new THREE.Object3D;
+            sphereGroup.position.set(0, 3, -4);
+
+            cubeGroup.add(sphereGroup);
+
+            geometry = new THREE.SphereGeometry(1, 20, 20);
+            sphere = new THREE.Mesh(geometry, material);
+
+            sphereGroup.add(sphere);
+
+            geometry = new THREE.CylinderGeometry(0, .333, .444, 20, 5);
+            cone = new THREE.Mesh(geometry, material);
+            cone.position.set(1, 1, -.667);
+            sphereGroup.add(cone);
+
+
+
+
+            var light = new THREE.DirectionalLight(0xffffff, 1.5);
+            light.position.set(.5, .2, .1);
+            cubeGroup.add(light);
+
+            scene.add(cubeGroup);
+
+        }
+
+
+        function addMouseHandler(canvas) {
+            canvas.addEventListener('mousemove',
+                function(e) {onMouseMove(e);}, false);
+            canvas.addEventListener('mouseup',
+                onMouseUp, false);
+            canvas.addEventListener('mousedown', onMouseDown, false);
+        }
+
+        var mouseDown = false,
+            pageX = 0;
+
+        function onMouseMove(evt) {
+            if (!mouseDown)
+                return;
+
+            evt.preventDefault();
+            var deltax = evt.pageX - pageX;
+            pageX = evt.pageX;
+            rotateScene(deltax);
+        }
+
+        function onMouseDown(evt) {
+            evt.preventDefault();
+            mouseDown = true;
+            pageX = evt.pageX;
+        }
+
+        function onMouseUp(evt) {
+            evt.preventDefault();
+            mouseDown = false;
+        }
+
+        function rotateScene(deltax) {
+            cubeGroup.rotation.y += deltax / 100;
+        }
+
+        function draw() {
+            stat.begin();
+
+            requestAnimationFrame(draw);
+            renderer.render(scene, camera);
+            animate();
+
+            stat.end();
+        }
+
+        function animate() {
+            var now = Date.now();
+            var deltat = now - currentTime;
+            currentTime = now;
+            var fract = deltat / duration;
+            var angle = Math.PI * 2 * fract;
+
+            cube.rotation.y += angle;
+            sphereGroup.rotation.y -= angle / 2;
+            cone.rotation.x += angle;
+        }
+
+
+    </script>
+</head>
+<body onload="init()">
+    <div id="container">
+        <canvas id="main-canvas" width=800 height=600></canvas>
+        <div id="title">
+            Three.js Scene Graph/Transform Hierarchy
+        </div>
+        <div id="prompt">
+            Drag the mouse to rotate the scene
+        </div>
+    </div>
+</body>
+</html>

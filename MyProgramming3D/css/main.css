@@ -1,0 +1,13 @@
+
+body {
+    font-family: Helvetica;
+}
+
+#container {
+    position:absolute;
+}
+
+
+#main-canvas {
+    background-color: #000;
+}
