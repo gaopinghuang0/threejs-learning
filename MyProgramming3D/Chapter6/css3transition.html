@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS 3D transforms - Back Face Visibility</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/css3dtransforms.css" />
+    <link rel="stylesheet" href="../css/css3dbackfaces.css" />
+    <link rel="stylesheet" href="../css/css3dtransition.css" />
+
+    <script src="../libs/jquery-1.9.1/jquery-1.9.1.js"></script>
+    <script src="../libs/jquery-ui-1.10.3.custom/js/jquery-ui-1.10.3.custom.js"></script>
+    
+    <script>
+        $(document).ready(
+            function() {
+                $('.clickable').click(function(){
+                    $(this).find('.card').toggleClass('flip goGold');
+                });
+            });
+        </script>
+    </head>
+    <body>
+        CSS 3D transforms - Transition 
+
+        <div id="transition1" class="container perspective">
+            <div class="legend">All properties</div>
+            <div class="code">{transition: all 2s;}</div>
+            <div class="cardBorder clickable">
+                <div id="front1" class="card nobackface frontside easeAll">
+                    FRONT
+                </div>
+                <div id="back1" class="card nobackface backside easeAll">
+                    BACK
+                </div>
+            </div>
+        </div>
+
+        <div id="transition2" class="container perspective">
+            <div class="legend">Individual properties</div>
+            <div class="code">{transition: transform 2s, background-color 5s linear 2s;}</div>
+            <div class="cardBorder clickable">
+                <div id="front2" class="card nobackface frontside easeIndi">
+                    front
+                </div>
+                <div id="back2" class="card nobackface backside easeIndi">
+                    BACK
+                </div>
+            </div>
+        </div>
+        <div id="prompt">
+            Click to Flip Each Card
+        </div>
+    </body>
+    </html>
