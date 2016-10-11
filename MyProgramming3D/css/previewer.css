@@ -1,0 +1,98 @@
+body {
+    background-color: #eee;
+    color: #212121;
+}
+
+#container {
+    z-index: -1;
+    width: 83%;
+    height: 92%;
+    top: 6%;
+    position: absolute;
+    border: 1px solid;
+    -webkit-box-shadow: 4px 4px 2px #888;
+    box-shadow: 4px 4px 2px #888;
+}
+
+#controls {
+    font-size:12px;
+    font-weight:bold;
+    border:1px solid;
+    width: 14%;
+    height:92%;
+    top:6%;
+    right:1%;
+    position:absolute;
+    box-shadow: 4px 4px 2px #888;
+}
+
+#stats {
+    height: 60px;
+    position:absolute;
+    margin:2px;
+}
+
+#load_time_stats {
+    top:18px;
+    left:90px;
+    position:absolute;
+    padding-left: 8px;
+    font-weight:normal;
+}
+
+#loadStatus {
+    width: 95%;
+    height: 6%;
+    top: 200px;
+    text-align:center;
+    position:absolute;
+}
+
+#prompt {
+    width: 95%;
+    height: 6%;
+    bottom: 30px;
+    text-align:center;
+    position:absolute;
+}
+
+#cameras {
+    height: 120px;
+    top: 240px;
+    position:absolute;
+    width: 98%;
+    margin:2px;
+}
+
+
+#lights {
+    height: 120px;
+    top: 350px;
+    position:absolute;
+    width: 98%;
+    margin:2px;
+}
+
+#animations {
+    height: 120px;
+    top: 460px;
+    position:absolute;
+    width: 98%;
+    margin:2px;
+}
+
+#animations_list {
+    width: 100%;
+}
+
+#animation_controls {
+    padding-left: 6px;
+}
+
+#misc {
+    height: 40px;
+    top: 620px;
+    position:absolute;
+    margin:2px;
+    width:98%;
+}
